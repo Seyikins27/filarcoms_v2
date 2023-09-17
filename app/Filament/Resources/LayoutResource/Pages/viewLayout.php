@@ -68,15 +68,6 @@ class viewLayout extends Page implements HasForms
                 ->setLanguage(CodeField::HTML, CodeField::JS, CodeField::PHP)
                 ->withLineNumbers()
                 ->hint('HTML and JavaScript Editor'),
-                CodeField::make('block_resource')
-                ->setLanguage(CodeField::PHP)
-                ->withLineNumbers()
-                ->hint('PHP Editor'),
-                /*Select::make('layouts')
-                ->label(__('filament-fabricator::page-resource.labels.layout'))
-                ->options(FilamentFabricator::getLayouts())
-                ->default('default')
-                ->required(),*/
             ])
         ];
     }

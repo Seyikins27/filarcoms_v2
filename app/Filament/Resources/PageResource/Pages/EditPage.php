@@ -16,13 +16,6 @@ class EditPage extends EditRecord
 {
     protected static string $resource = PageResource::class;
 
-    // protected function getHeaderActions(): array
-    // {
-    //     return [
-    //         Actions\DeleteAction::make(),
-    //     ];
-    // }
-
     protected function beforeFill():void
     {
         if(Auth::user()->role_id>2)
@@ -73,8 +66,9 @@ class EditPage extends EditRecord
                 })
                 ->openUrlInNewTab(),
             Action::make('publish')
-                ->action('publish')
                 ->requiresConfirmation()
+                ->color('warning')
+                ->action('publish')
                 ->hidden( fn($record) =>! Auth::user()->can_publish())
         ];
     }

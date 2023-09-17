@@ -14,6 +14,11 @@ class EditTemplate extends EditRecord
     {
         return [
             Actions\DeleteAction::make(),
+            Actions\ViewAction::make('Preview Template')->url(function(){
+                return route('preview-template',$this->record);
+            })
+            ->label('Preview Template')
+            ->openUrlInNewTab()
         ];
     }
 }

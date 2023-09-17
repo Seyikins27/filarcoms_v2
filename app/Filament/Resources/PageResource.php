@@ -262,6 +262,13 @@ class PageResource extends Resource
             ->actions([
                 ViewAction::make()
                 ->visible(config('filament-fabricator.enable-view-page')),
+                Action::make('preview')
+                ->color('success')
+                ->icon('heroicon-s-eye')
+                ->url(function(Page $record){
+                    return route('preview-page',[$record,'status'=>1]);
+                })
+                ->openUrlInNewTab(),
                 EditAction::make(),
                 Action::make('visit')
                     ->label(__('filament-fabricator::page-resource.actions.visit'))

@@ -83,7 +83,37 @@ class TemplateResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('name')->label('Template Name'),
+                TextColumn::make('layout')->label('Template Layout'),
+                TextColumn::make('url')
+                ->label(__('filament-fabricator::page-resource.labels.url'))
+                ->toggleable()
+                ->getStateUsing(function(){return "Preview Template";})
+                ->url(function (Template $record){
+                    return route('preview-template',$record);
+                })
+                ->visible()
+                ->openUrlInNewTab(),
+                TextColumn::make('created_by')
+                    ->label('Created By')
+                    ->getStateUsing(function(Template $record){
+                    if($record->created_by !=null)
+                    {
+                        return $record->who_created->name;
+                    }
+                    else
+                    {
+                        return "NULL";
+                    }
+               }),
+               IconColumn::make('active')->icons([
+                'heroicon-o-x-circle' => fn($state, $record): bool => $record->active ==false,
+                'heroicon-o-check-circle' => fn($state, $record): bool => $record->active ==true,
+                ])
+                ->colors([
+                    'danger'=> fn($state, $record): bool => $record->active ==false,
+                    'success' => fn($state, $record): bool => $record->active ==true
+                ]),
             ])
             ->filters([
                 //
