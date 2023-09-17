@@ -51,6 +51,11 @@ class PageResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
+    protected static ?string $navigationGroup = 'Content';
+
+    protected static ?int $navigationSort = 1;
+
+
     /*public static function getModel(): string
     {
         return FilamentFabricator::getPageModel();
