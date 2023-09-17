@@ -8,14 +8,18 @@ use App\Models\Layout;
 use Filament\Forms;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Awcodes\Curator\Components\Forms\CuratorPicker;
+
 
 class LayoutResource extends Resource
 {
@@ -35,15 +39,22 @@ class LayoutResource extends Resource
         return $form
             ->schema([
                 Section::make()->schema([
-                    TextInput::make('name')->label('Block Name')->unique(function($context){
+                    TextInput::make('name')->unique(function($context){
                         if($context==="edit")
                         {
                             return false;
                         }
                     })->required()->disabledOn('edit'),
-                    RichEditor::make('description')->label('Block Description'),
-                    CuratorPicker::make('block_image')
-                    ->label('Block Image'),
+                    Toggle::make('is_buildable')->label('Buildable Layout')->helperText('If this layout will need to be built/compiled e.g tailwind')
+                    ->reactive(),
+                    Textarea::make('build_command')->label('command')->required()->hidden(function(Callable $get){
+                        if($get('is_buildable')==true)
+                        {
+                            return false;
+                        }
+                        return true;
+                    }),
+
                 ])
             ]);
     }
@@ -52,13 +63,33 @@ class LayoutResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('name')->label('Layout Name')->searchable(),
+                IconColumn::make('is_buildable')->options([
+                    'heroicon-o-x-circle' => fn($state, $record): bool => $record->is_buildable ==false,
+                    'heroicon-o-check-circle' => fn($state, $record): bool => $record->is_buildable ==true,
+                ])
+                ->colors([
+                    'danger'=> fn($state, $record): bool => $record->is_buildable ==false,
+                    'success' => fn($state, $record): bool => $record->is_buildable ==true
+                ]),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('View Layout')->url(function(Layout $record){
+                    return LayoutResource::getUrl('view',['record'=>$record]);
+              })->openUrlInNewTab(),
+                Tables\Actions\Action::make('Build Layout')->action(function(Layout $record){
+                    //$bl=BuildLayout::dispatch($record->build_command);
+                    //dd($bl);
+                })->visible(function(Layout $record){
+                    if($record->is_buildable==true)
+                    {
+                        return true;
+                    }
+                })
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -83,6 +114,7 @@ class LayoutResource extends Resource
             'index' => Pages\ListLayouts::route('/'),
             'create' => Pages\CreateLayout::route('/create'),
             'edit' => Pages\EditLayout::route('/{record}/edit'),
+            'view' => Pages\ViewLayout::route('/{record}/view')
         ];
     }
 }

@@ -7,6 +7,17 @@ return [
         'image/webp',
         'image/svg+xml',
         'application/pdf',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+        'image/jpg',
+        'image/gif',
+        'image/JPG',
+        'video/mp4',
+        'video/avi',
+        'video/mov',
+        'video/flv',
+        'video/3gp'
     ],
     'cloud_disks' => [
         's3',

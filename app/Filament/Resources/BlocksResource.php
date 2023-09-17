@@ -6,6 +6,9 @@ use App\Filament\Resources\BlocksResource\Pages;
 use App\Filament\Resources\BlocksResource\RelationManagers;
 use App\Models\Blocks;
 use Filament\Forms;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -13,6 +16,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Awcodes\Curator\Components\Forms\CuratorPicker;
 
 class BlocksResource extends Resource
 {
@@ -30,7 +34,17 @@ class BlocksResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Section::make()->schema([
+                    TextInput::make('name')->label('Block Name')->unique(function($context){
+                        if($context==="edit")
+                        {
+                            return false;
+                        }
+                    })->required()->disabledOn('edit'),
+                    RichEditor::make('description')->label('Block Description'),
+                    CuratorPicker::make('block_image')
+                    ->label('Block Image'),
+                ])
             ]);
     }
 
@@ -46,7 +60,7 @@ class BlocksResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('View Block')->url(function(Blocks $record){
-                    return BlocksResource::getUrl('view',$record);
+                    return BlocksResource::getUrl('view',['record'=>$record]);
               })->openUrlInNewTab()
             ])
             ->bulkActions([
