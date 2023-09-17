@@ -194,13 +194,48 @@ class PageResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('title')
+                ->label(__('filament-fabricator::page-resource.labels.title'))
+                ->searchable()
+                ->sortable(),
+
+            TextColumn::make('url')
+                ->label(__('filament-fabricator::page-resource.labels.url'))
+                ->toggleable()
+                ->getStateUsing(fn (?PageContract $record) => FilamentFabricator::getPageUrlFromId($record->id) ?: null)
+                ->url(fn (?PageContract $record) => FilamentFabricator::getPageUrlFromId($record->id) ?: null, true)
+                ->visible(config('filament-fabricator.routing.enabled')),
+
+            TextColumn::make('layout')
+                ->label(__('filament-fabricator::page-resource.labels.layout'))
+                ->badge()
+                ->toggleable()
+                ->sortable(),
+
+            TextColumn::make('parent.title')
+                ->label(__('filament-fabricator::page-resource.labels.parent'))
+                ->toggleable(isToggledHiddenByDefault: true)
+                ->formatStateUsing(fn ($state) => $state ?? '-')
+                ->url(fn (?PageContract $record) => filled($record->parent_id) ? PageResource::getUrl('edit', ['record' => $record->parent_id]) : null),
+
             ])
             ->filters([
-                //
+                SelectFilter::make('layout')
+                ->label(__('filament-fabricator::page-resource.labels.layout'))
+                ->options(FilamentFabricator::getLayouts()),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                ViewAction::make()
+                ->visible(config('filament-fabricator.enable-view-page')),
+                EditAction::make(),
+                Action::make('visit')
+                    ->label(__('filament-fabricator::page-resource.actions.visit'))
+                    ->url(fn (?PageContract $record) => FilamentFabricator::getPageUrlFromId($record->id, true) ?: null)
+                    ->icon('heroicon-o-arrow-top-right-on-square')
+                    ->openUrlInNewTab()
+                    ->color('success')
+                    ->visible(config('filament-fabricator.routing.enabled')),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -19,6 +19,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use  Z3d0X\FilamentFabricator\FilamentFabricatorPlugin;
 use SolutionForest\FilamentAccessManagement\FilamentAccessManagementPanel;
+use Awcodes\Curator\CuratorPlugin;
 
 
 class AdminPanelProvider extends PanelProvider
@@ -59,6 +60,14 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->plugins([
                 //FilamentFabricatorPlugin::make(),
+               CuratorPlugin::make()
+                ->label('Media')
+                ->pluralLabel('Media')
+                ->navigationIcon('heroicon-o-photo')
+                ->navigationGroup('Content')
+                ->navigationSort(3)
+                ->navigationCountBadge()
+                //->resource(\App\Filament\Resources\CustomMediaResource::class)
             ]);
     }
 }
