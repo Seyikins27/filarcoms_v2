@@ -66,4 +66,9 @@ class Page extends Model implements Contract
     {
         return $this->children()->select('id', 'slug', 'title', 'parent_id')->with('children:id,slug,title,parent_id');
     }
+
+    public function who_created(): BelongsTo
+    {
+        return $this->belongsTo(User::class,'created_by');
+    }
 }

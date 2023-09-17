@@ -40,7 +40,7 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
-use Filament\Infolists\Components\Section as ComponentsSection;
+use Filament\Tables\Columns\IconColumn;
 use Illuminate\Support\Facades\Auth;
 
 class PageResource extends Resource
@@ -212,10 +212,11 @@ class PageResource extends Resource
                 ->visible(config('filament-fabricator.routing.enabled')),
 
             TextColumn::make('layout')
-                ->label(__('filament-fabricator::page-resource.labels.layout'))
                 ->badge()
+                ->label(__('filament-fabricator::page-resource.labels.layout'))
                 ->toggleable()
                 ->sortable(),
+                //->enum(FilamentFabricator::getLayouts()),
 
             TextColumn::make('parent.title')
                 ->label(__('filament-fabricator::page-resource.labels.parent'))
@@ -223,6 +224,35 @@ class PageResource extends Resource
                 ->formatStateUsing(fn ($state) => $state ?? '-')
                 ->url(fn (?PageContract $record) => filled($record->parent_id) ? PageResource::getUrl('edit', ['record' => $record->parent_id]) : null),
 
+            IconColumn::make('published')->icons([
+                'heroicon-o-x-circle' => fn($state, $record): bool => $record->published ==false,
+                'heroicon-o-check-circle' => fn($state, $record): bool => $record->published ==true,
+            ])
+            ->colors([
+                'danger'=> fn($state, $record): bool => $record->published ==false,
+                'success' => fn($state, $record): bool => $record->published ==true
+            ])->extraAttributes(function($record){
+                if($record->published)
+                {
+                    return ['title'=>'published'];
+                }
+                else
+                {
+                    return ['title'=>'unpublished'];
+                }
+            }),
+            TextColumn::make('created_by')
+                ->label('Created By')
+                ->getStateUsing(function(Page $record){
+                if($record->created_by !=null)
+                {
+                    return $record->who_created->name;
+                }
+                else
+                {
+                    return "NULL";
+                }
+           })
             ])
             ->filters([
                 SelectFilter::make('layout')
@@ -230,7 +260,6 @@ class PageResource extends Resource
                 ->options(FilamentFabricator::getLayouts()),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
                 ViewAction::make()
                 ->visible(config('filament-fabricator.enable-view-page')),
                 EditAction::make(),

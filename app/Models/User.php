@@ -44,4 +44,23 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function can_publish():bool
+    {
+        if($this->can_publish==true || $this->can_publish==1)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public function pages()
+    {
+        return $this->hasMany(Page::class,'created_by');
+    }
+
+    public function page_updated()
+    {
+        return $this->hasMany(Page::class,'updated_by');
+    }
 }
