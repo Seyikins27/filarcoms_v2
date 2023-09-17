@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class Template extends Model
 {
     use HasFactory;
+    protected $guarded=[];
     protected $casts = [
         'blocks' => 'array',
         'viewable_by' => 'array'

@@ -12,6 +12,7 @@ use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\File;
 use Z3d0X\FilamentFabricator\Facades\FilamentFabricator;
 use Creagia\FilamentCodeField\CodeField;
+use Filament\Forms\Components\Section;
 use Illuminate\Support\Str;
 
 class viewLayout extends Page implements HasForms
@@ -62,7 +63,7 @@ class viewLayout extends Page implements HasForms
     {
         return [
 
-            Card::make()->schema([
+            Section::make()->schema([
                 CodeField::make('layout_view')
                 ->setLanguage(CodeField::HTML, CodeField::JS, CodeField::PHP)
                 ->withLineNumbers()
