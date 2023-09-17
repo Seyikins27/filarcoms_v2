@@ -64,7 +64,7 @@ class LayoutResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')->label('Layout Name')->searchable(),
-                IconColumn::make('is_buildable')->options([
+                IconColumn::make('is_buildable')->icons([
                     'heroicon-o-x-circle' => fn($state, $record): bool => $record->is_buildable ==false,
                     'heroicon-o-check-circle' => fn($state, $record): bool => $record->is_buildable ==true,
                 ])
