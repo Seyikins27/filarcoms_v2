@@ -11,8 +11,14 @@ This CMS was built by assembling the following FilamentPHP based plugins:
 
 ## How to Install
 
-Clone this repository ```git clone https://github.com/Seyikins27/filarcoms_v2/ ```
-Migrate the Database files by running ``` php artisan migrate --seed ```
+- Clone this repository
+  ```
+  git clone https://github.com/Seyikins27/filarcoms_v2/
+  ```
+- Migrate the Database files by running
+   ```
+   php artisan migrate --seed
+   ```
 Open the admin console by going to {{base_url}}/admin 
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
