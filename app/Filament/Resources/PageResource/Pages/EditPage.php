@@ -16,19 +16,6 @@ class EditPage extends EditRecord
 {
     protected static string $resource = PageResource::class;
 
-    protected function beforeFill():void
-    {
-        if(Auth::user()->role_id>2)
-        {
-            $record=$this->record->viewable_by!=null?(object)$this->record->viewable_by[0]:null;
-            //dd($record);
-            if($record===null)
-            {
-                abort(403);
-            }
-            abort_unless(in_array(Auth::user()->id,$record->users) || in_array(Auth::user()->organogram_id,$record->organogram),403);
-        }
-    }
 
     protected function mutateFormDataBeforeSave(array $data): array
     {
