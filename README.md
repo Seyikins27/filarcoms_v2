@@ -11,11 +11,11 @@ This CMS was built by assembling the following FilamentPHP based plugins:
 
 ## How to Install
 
-- Clone this repository
+1. Clone this repository
   ```
   git clone https://github.com/Seyikins27/filarcoms_v2/
   ```
-- Migrate the Database files by running
+2. Migrate the Database files by running
    ```
    php artisan migrate --seed
    ```
