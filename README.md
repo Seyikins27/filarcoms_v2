@@ -1,6 +1,13 @@
 <h1>FilarCOMS</h1>
-<p>FilarCOMS is a component based Content Management system that is built on Laravel (FilamentPHP) a framework that uses the TALL stack</p>
+<p>FilarCOMS is a Block based Content Management system that is built on Laravel (FilamentPHP) a framework that uses the TALL stack</p>
 <p>FilarCOMS stands for <b>Fi</b>lamentPHP <b>Lar</b>avel and <b>CO</b>ntent <b>M</b>anagement <b>S</b>ystem</p>
+<p>This CMS was built by assembling the following FilamentPHP based plugins</p>
+<p>
+    <ul>
+        <li>Filament Fabricator: Responsible for the creation of blocks for pages <a href="https://github.com/z3d0x/filament-fabricator" target="_blank">https://github.com/z3d0x/filament-fabricator</a></li>
+        <li>Curator: For Managing Media Contents <a href="https://github.com/awcodes/filament-curator" target="_blank">https://github.com/awcodes/filament-curator</a></li>
+    </ul>
+</p>
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
