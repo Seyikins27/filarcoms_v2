@@ -19,7 +19,14 @@ This CMS was built by assembling the following FilamentPHP based plugins:
    ```
    php artisan migrate --seed
    ```
-Open the admin console by going to {{base_url}}/admin 
+3. Open the admin console by going to {{base_url}}/admin
+
+## More About the Plugins
+
+To be able to effectively use this CMS you must become familiar with the following
+1. [Laravel](https://laravel.com)
+2. [FilamentPHP](https://filamentphp.com)
+3. [Filament Fabricator](https://github.com/z3d0x/filament-fabricator)
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
