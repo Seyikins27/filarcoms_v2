@@ -4,7 +4,7 @@
 /public/build
 /public/hot
 /public/storage
-/resources/views/components/filament-fabricator
+
 /storage/*.key
 /vendor
 .env
