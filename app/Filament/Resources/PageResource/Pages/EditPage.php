@@ -53,9 +53,11 @@ class EditPage extends EditRecord
                 })
                 ->openUrlInNewTab(),
             Action::make('publish')
-                ->requiresConfirmation()
+                ->requiresConfirmation(true)
                 ->color('warning')
-                ->action('publish')
+                ->action(function(){
+                    return $this->publish();
+                })
                 ->hidden( fn($record) =>! Auth::user()->can_publish())
         ];
     }
