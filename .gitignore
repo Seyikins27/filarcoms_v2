@@ -4,6 +4,7 @@
 /public/build
 /public/hot
 /public/storage
+/public/filament-fabricator/layouts
 /resources/views/components/filament-fabricator
 /storage/*.key
 /vendor
