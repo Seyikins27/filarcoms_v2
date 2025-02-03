@@ -17,7 +17,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-//use  Z3d0X\FilamentFabricator\FilamentFabricatorPlugin;
+use  Z3d0X\FilamentFabricator\FilamentFabricatorPlugin;
 use Awcodes\Curator\CuratorPlugin;
 use SolutionForest\FilamentAccessManagement\FilamentAccessManagementPanel;
 
@@ -59,9 +59,9 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->plugins([
-                //FilamentFabricatorPlugin::make(),
+                FilamentFabricatorPlugin::make(),
                 FilamentAccessManagementPanel::make(),
-               CuratorPlugin::make()
+                CuratorPlugin::make()
                 ->label('Media')
                 ->pluralLabel('Media')
                 ->navigationIcon('heroicon-o-photo')
