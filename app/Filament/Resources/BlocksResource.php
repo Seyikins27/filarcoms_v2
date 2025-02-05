@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\BlocksResource\Pages;
 use App\Filament\Resources\BlocksResource\RelationManagers;
+use App\Forms\Components\MultimediaPicker;
 use App\Models\Blocks;
 use Filament\Forms;
 use Filament\Forms\Components\RichEditor;
@@ -42,8 +43,10 @@ class BlocksResource extends Resource
                         }
                     })->required()->disabledOn('edit'),
                     RichEditor::make('description')->label('Block Description'),
-                    CuratorPicker::make('block_image')
-                    ->label('Block Image'),
+                    MultimediaPicker::make('block_image')
+                    ->label('Block Image')
+                    ->relationship('image','id')
+                    ->visibility('public'),
                 ])
             ]);
     }
