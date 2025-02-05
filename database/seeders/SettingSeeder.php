@@ -16,7 +16,7 @@ class SettingSeeder extends Seeder
         Setting::create([
             'key'=>'site_logo',
             'value'=>null,
-            'type'=>'CuratorPicker'
+            'type'=>'MultimediaPicker'
         ]);
         Setting::create([
             'key'=>'site_name',

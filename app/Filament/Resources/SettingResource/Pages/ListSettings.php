@@ -51,6 +51,10 @@ class ListSettings extends ListRecords implements HasForms
             {
                 $namespace='Awcodes\\Curator\\Components\\Forms';
             }
+            elseif($setting->type=="MultimediaPicker")
+            {
+                $namespace='App\\Forms\\Components';
+            }
             else{
                 $namespace='Filament\\Forms\\Components';
             }

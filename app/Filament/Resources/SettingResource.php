@@ -90,6 +90,7 @@ class SettingResource extends Resource
 
         }
         $theClasses["CuratorPicker"]="CuratorPicker";
+        $theClasses["MultimediaPicker"]="MultimediaPicker";
         //dd($theClasses);
         return $theClasses;
     }
