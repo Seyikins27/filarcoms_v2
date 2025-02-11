@@ -42,6 +42,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
 use Filament\Tables\Columns\IconColumn;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PageResource extends Resource
 {
@@ -182,7 +183,20 @@ class PageResource extends Resource
                                         ->searchable()
                                         ->preload()
                                         ->options(function(){
-                                            return User::where('role_id','>',1)->get()->pluck('name','id');
+                                            // $users = DB::table('model_has_roles')
+                                            //         ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
+                                            //         ->where('roles.name', '!=', 'super_admin')
+                                                    
+                                            //         ->get();
+
+                                                 $users = DB::table('model_has_roles')
+                                                 ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
+                                                 ->join('users', 'model_has_roles.model_id', '=', 'users.id')
+                                                 ->where('roles.name', '!=', 'super_admin')
+                                                 ->select('users.*')
+                                                 ->get();
+                                                 
+                                            return $users->pluck('name','id');
                                         }),
                                     ])
                                     ->addable(false)

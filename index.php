@@ -18,3 +18,5 @@ $uri = urldecode(
     return false;
 }*/
 require_once __DIR__.'/public/index.php';
+
+//if(! defined('STDIN')) define('STDIN', fopen("php://stdin","r"));
