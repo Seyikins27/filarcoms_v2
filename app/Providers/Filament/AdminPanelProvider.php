@@ -59,6 +59,7 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->plugins([
+                \Biostate\FilamentMenuBuilder\FilamentMenuBuilderPlugin::make(),
                 FilamentFabricatorPlugin::make(),
                 FilamentAccessManagementPanel::make(),
                 CuratorPlugin::make()

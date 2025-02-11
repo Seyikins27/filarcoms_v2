@@ -12,6 +12,7 @@
         "amidesfahani/filament-tinyeditor": "^2.0",
         "awcodes/filament-curator": "^3.0",
         "bezhansalleh/filament-google-analytics": "^2.0",
+        "biostate/filament-menu-builder": "^1.0",
         "creagia/filament-code-field": "^2.0",
         "filament/filament": "^3.0-stable",
         "guzzlehttp/guzzle": "^7.2",
