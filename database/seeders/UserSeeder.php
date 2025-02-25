@@ -16,7 +16,6 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        
         $role=Role::create([
             'name'=>'super_admin',
             'guard_name'=>'web'
