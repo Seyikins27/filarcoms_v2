@@ -155,7 +155,7 @@ class PageResource extends Resource
                                     ->reactive()
                                     ->suffixAction(
                                         fn ($get, $context) => FormAction::make($context . '-parent')
-                                                ->icon('heroicon-o-external-link')
+                                                ->icon('heroicon-o-arrow-top-right-on-square')
                                                 ->url(fn () => $get('parent_id')!=null ? PageResource::getUrl($context, ['record' => $get('parent_id')]):null)
                                                 ->openUrlInNewTab()
                                                 ->visible(fn () => filled($get('parent_id')))
@@ -315,6 +315,7 @@ class PageResource extends Resource
             'index' => Pages\ListPages::route('/'),
             'create' => Pages\CreatePage::route('/create'),
             'edit' => Pages\EditPage::route('/{record}/edit'),
+            'view' => Pages\EditPage::route('/{record}/view'),
         ];
     }
 }
