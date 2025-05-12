@@ -118,6 +118,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('title', 50);
             $table->string('icon', 50)->nullable();
+            $table->boolean('is_filament_panel')->default(1);
             $table->string('active_icon', 50)->nullable();
             $table->string('uri', 50)->nullable();
             $table->string('badge', 50)->nullable();

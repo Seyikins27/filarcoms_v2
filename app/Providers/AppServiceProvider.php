@@ -18,6 +18,8 @@ use Biostate\FilamentMenuBuilder\Models\MenuItem as VendorMenuItem;
 use Biostate\FilamentMenuBuilder\Filament\Resources\MenuResource as VendorMenuResource;
 use Biostate\FilamentMenuBuilder\Filament\Resources\MenuItemResource as VendorMenuItemResource;
 use Biostate\FilamentMenuBuilder\Http\Livewire\MenuBuilder as VendorMenuBuilder;
+use SolutionForest\FilamentAccessManagement\Resources\UserResource as VendorUserResource;
+use App\Filament\Resources\UserResource;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -34,6 +36,8 @@ class AppServiceProvider extends ServiceProvider
         $loader->alias(VendorMenuItemResource::class, MenuItemResource::class);
         $loader->alias(VendorMenuResource::class, MenuResource::class);
         $loader->alias(VendorMenuBuilder::class, MenuBuilder::class);
+        $loader->alias(VendorUserResource::class, UserResource::class);
+
     }
 
     /**

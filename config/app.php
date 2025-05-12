@@ -171,6 +171,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\Filament\AdminPanelProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+       // App\Providers\DynamicRouteServiceProvider::class,
     ])->toArray(),
 
     /*

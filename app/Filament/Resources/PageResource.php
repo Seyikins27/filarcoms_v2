@@ -295,11 +295,23 @@ class PageResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\Action::make('Export Pages')->label('Export')
+                        ->action(function(){
+                            $this->export();
+                        })
+                        ->button()
+                        ->color('success')
+                        ->icon('heroicon-o-arrow-up-on-square'),
                 ]),
             ])
             ->emptyStateActions([
                 Tables\Actions\CreateAction::make(),
             ]);
+    }
+
+    public function export()
+    {
+       dd("HEree");
     }
 
     public static function getRelations(): array
