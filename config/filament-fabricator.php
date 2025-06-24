@@ -1,6 +1,9 @@
 <?php
 
 // config for Z3d0X/FilamentFabricator
+
+use App\Filament\Fabricator\BlockRegistry;
+
 return [
     'routing' => [
         'enabled' => true,
