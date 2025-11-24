@@ -97,6 +97,48 @@ class PageResource extends Resource
                         PageBuilder::make('blocks')
                             ->label(__('filament-fabricator::page-resource.labels.blocks'))->collapsible(),
 
+                        Forms\Components\Actions::make([
+                            Forms\Components\Actions\Action::make('generateWithAI')
+                                ->label(__('Generate with AI'))
+                                ->action(function (Set $set, Get $get, array $data) {
+                                    $blocks = $get('blocks');
+                                    if ($data['generation_type'] === 'text') {
+                                        $blocks[] = [
+                                            'type' => 'custom-html-block',
+                                            'data' => [
+                                                'content' => $data['prompt'],
+                                            ],
+                                        ];
+                                    } else {
+                                        $blocks[] = [
+                                            'type' => 'custom-html-block',
+                                            'data' => [
+                                                'content' => __('Design-to-Code generation is not yet implemented.'),
+                                            ],
+                                        ];
+                                    }
+                                    $set('blocks', $blocks);
+                                })
+                                ->form([
+                                    Forms\Components\Select::make('generation_type')
+                                        ->label(__('Generation Type'))
+                                        ->options([
+                                            'text' => __('Text-to-HTML'),
+                                            'design' => __('Design-to-Code'),
+                                        ])
+                                        ->default('text')
+                                        ->reactive(),
+                                    Forms\Components\Textarea::make('prompt')
+                                        ->label(__('Enter a prompt to generate a component'))
+                                        ->required()
+                                        ->visible(fn ($get) => $get('generation_type') === 'text'),
+                                    Forms\Components\FileUpload::make('design_file')
+                                        ->label(__('Upload a design file'))
+                                        ->required()
+                                        ->visible(fn ($get) => $get('generation_type') === 'design'),
+                                ]),
+                        ]),
+
                         Group::make()->schema(FilamentFabricator::getSchemaSlot('blocks.after')),
                     ])
                     ->columnSpan(2),
