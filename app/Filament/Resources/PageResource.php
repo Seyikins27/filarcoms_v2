@@ -8,7 +8,9 @@ use App\Models\Page;
 use App\Models\Organogram;
 use App\Models\Template;
 use App\Models\User;
+use App\Services\OpenAIService;
 use Filament\Forms\Components\Actions\Action as FormAction;
+use Filament\Notifications\Notification;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Placeholder;
@@ -100,13 +102,22 @@ class PageResource extends Resource
                         Forms\Components\Actions::make([
                             Forms\Components\Actions\Action::make('generateWithAI')
                                 ->label(__('Generate with AI'))
-                                ->action(function (Set $set, Get $get, array $data) {
+                                ->action(function (Set $set, Get $get, array $data, OpenAIService $openAIService) {
                                     $blocks = $get('blocks');
                                     if ($data['generation_type'] === 'text') {
+                                        $generatedHtml = $openAIService->generateHtml($data['prompt']);
+                                        if (empty($generatedHtml)) {
+                                            Notification::make()
+                                                ->title(__('Error generating content'))
+                                                ->body(__('The AI service failed to generate content. Please try again.'))
+                                                ->danger()
+                                                ->send();
+                                            return;
+                                        }
                                         $blocks[] = [
                                             'type' => 'custom-html-block',
                                             'data' => [
-                                                'content' => $data['prompt'],
+                                                'content' => $generatedHtml,
                                             ],
                                         ];
                                     } else {
