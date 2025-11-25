@@ -8,7 +8,9 @@ use App\Models\Page;
 use App\Models\Organogram;
 use App\Models\Template;
 use App\Models\User;
+use App\Services\OpenAIService;
 use Filament\Forms\Components\Actions\Action as FormAction;
+use Filament\Notifications\Notification;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Placeholder;
@@ -96,6 +98,57 @@ class PageResource extends Resource
 
                         PageBuilder::make('blocks')
                             ->label(__('filament-fabricator::page-resource.labels.blocks'))->collapsible(),
+
+                        Forms\Components\Actions::make([
+                            Forms\Components\Actions\Action::make('generateWithAI')
+                                ->label(__('Generate with AI'))
+                                ->action(function (Set $set, Get $get, array $data, OpenAIService $openAIService) {
+                                    $blocks = $get('blocks');
+                                    if ($data['generation_type'] === 'text') {
+                                        $generatedHtml = $openAIService->generateHtml($data['prompt']);
+                                        if (empty($generatedHtml)) {
+                                            Notification::make()
+                                                ->title(__('Error generating content'))
+                                                ->body(__('The AI service failed to generate content. Please try again.'))
+                                                ->danger()
+                                                ->send();
+                                            return;
+                                        }
+                                        $blocks[] = [
+                                            'type' => 'custom-html-block',
+                                            'data' => [
+                                                'content' => $generatedHtml,
+                                            ],
+                                        ];
+                                    } else {
+                                        $blocks[] = [
+                                            'type' => 'custom-html-block',
+                                            'data' => [
+                                                'content' => __('Design-to-Code generation is not yet implemented.'),
+                                            ],
+                                        ];
+                                    }
+                                    $set('blocks', $blocks);
+                                })
+                                ->form([
+                                    Forms\Components\Select::make('generation_type')
+                                        ->label(__('Generation Type'))
+                                        ->options([
+                                            'text' => __('Text-to-HTML'),
+                                            'design' => __('Design-to-Code'),
+                                        ])
+                                        ->default('text')
+                                        ->reactive(),
+                                    Forms\Components\Textarea::make('prompt')
+                                        ->label(__('Enter a prompt to generate a component'))
+                                        ->required()
+                                        ->visible(fn ($get) => $get('generation_type') === 'text'),
+                                    Forms\Components\FileUpload::make('design_file')
+                                        ->label(__('Upload a design file'))
+                                        ->required()
+                                        ->visible(fn ($get) => $get('generation_type') === 'design'),
+                                ]),
+                        ]),
 
                         Group::make()->schema(FilamentFabricator::getSchemaSlot('blocks.after')),
                     ])

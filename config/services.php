@@ -25,6 +25,11 @@ return [
         'token' => env('POSTMARK_TOKEN'),
     ],
 
+    'openai' => [
+        'secret' => env('OPENAI_SECRET'),
+        'model' => env('OPENAI_MODEL', 'gpt-3.5-turbo'),
+    ],
+
     'ses' => [
         'key' => env('AWS_ACCESS_KEY_ID'),
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
