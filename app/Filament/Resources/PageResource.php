@@ -139,9 +139,7 @@ class PageResource extends Resource
                                         };
                                     })
                                     ->required(),
-
                                 TagsInput::make('seo_tags')->label('SEO Tags')->required(),
-
                                 Select::make('layout')
                                     ->label(__('filament-fabricator::page-resource.labels.layout'))
                                     ->options(FilamentFabricator::getLayouts())
@@ -186,7 +184,7 @@ class PageResource extends Resource
                                             // $users = DB::table('model_has_roles')
                                             //         ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
                                             //         ->where('roles.name', '!=', 'super_admin')
-                                                    
+
                                             //         ->get();
 
                                                  $users = DB::table('model_has_roles')
@@ -195,7 +193,7 @@ class PageResource extends Resource
                                                  ->where('roles.name', '!=', 'super_admin')
                                                  ->select('users.*')
                                                  ->get();
-                                                 
+
                                             return $users->pluck('name','id');
                                         }),
                                     ])

@@ -26,7 +26,7 @@ if (! function_exists('site_config')) {
 if (! function_exists('layout_style_assets')) {
     function layout_style_assets($layout, array|string $files) {
         try{
-            $fabricator_path='filament-fabricator/layouts/'.ucfirst($layout).'/';
+            $fabricator_path='filament-fabricator/layouts/'.$layout.'/';
             $full_path="";
             if(gettype($files)=="string")
             {
@@ -39,7 +39,7 @@ if (! function_exists('layout_style_assets')) {
                     $full_path.="<link rel='stylesheet' href='".asset($fabricator_path.$file)."' type='text/css'/>\n";
                 }
             }
-            
+
             echo $full_path;
         }
         catch(\Exception $e)
@@ -54,7 +54,7 @@ if (! function_exists('layout_script_assets')) {
     function layout_script_assets($layout, array|string $files) {
         try{
             //dd($file);
-            $fabricator_path='filament-fabricator/layouts/'.ucfirst($layout).'/';
+            $fabricator_path='filament-fabricator/layouts/'.$layout.'/';
             $full_path="";
             if(gettype($files)=="string")
             {
@@ -67,12 +67,20 @@ if (! function_exists('layout_script_assets')) {
                     $full_path.="<script' src='".asset($fabricator_path.$file)."'></script>\n";
                 }
             }
-            
+
             echo $full_path;
         }
         catch(\Exception $e)
         {
              return "Unable to Load Assets Files : because: ".$e->getMessage();
         }
+    }
+}
+
+if (! function_exists('asset_url')) {
+    function asset_url($layout, $file) {
+
+            $fabricator_path='filament-fabricator/layouts/'.$layout.'/';
+            return asset($fabricator_path.$file);
     }
 }
